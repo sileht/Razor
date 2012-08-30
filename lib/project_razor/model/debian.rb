@@ -112,9 +112,6 @@ module ProjectRazor
           when "boot"
             fsm_action(:os_boot, :postinstall)
             return os_complete_script(@node)
-          when "source_fix"
-            fsm_action(:source_fix, :postinstall)
-            return
           when "send_ips"
             #fsm_action(:source_fix, :postinstall)
             # Grab IP string
@@ -156,10 +153,6 @@ module ProjectRazor
             :mk_call            => :postinstall,
             :boot_call          => :postinstall,
             :preseed_end        => :postinstall,
-            :source_fix         => :postinstall,
-            :apt_get_update     => :postinstall,
-            :apt_get_upgrade    => :postinstall,
-            :apt_get_ruby       => :postinstall,
             :postinstall_inject => :postinstall,
             :os_boot            => :os_complete,
             :post_error         => :error_catch,
