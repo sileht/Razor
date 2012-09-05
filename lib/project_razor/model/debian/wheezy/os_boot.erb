@@ -7,7 +7,6 @@ check_status(){
 		curl -silent "<%= callback_url("postinstall", "") %>"$step"_ok"
 	else
 		curl -silent "<%= callback_url("postinstall", "") %>"$step"_failed"
-		curl -silent "<%= callback_url("postinstall", "post_error") %>"
 		exit 1
 	fi
 }
