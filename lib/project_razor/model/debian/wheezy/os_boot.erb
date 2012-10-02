@@ -1,5 +1,11 @@
 #!/bin/bash
 
+wait_link_configured(){
+	while [ -z "$(ip r)" ] ; do
+		sleep 1
+	done
+}
+
 check_status(){
 	status=$?
 	step="$1"
@@ -22,6 +28,8 @@ echo <%= hostname %> > /etc/hostname
 cp -p /etc/hosts /etc/hosts-
 sed -i -e '/^127\.0\.1\.1/s/.*/127.0.1.1	<%= hostname %>.<%= domainname %>	<%= hostname %>/' /etc/hosts
 check_status "set_hostname"
+
+wait_link_configured
 
 apt-get -y update
 check_status "apt_update"
