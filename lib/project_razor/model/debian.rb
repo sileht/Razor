@@ -115,9 +115,6 @@ module ProjectRazor
           when "final"
             fsm_action(:os_final, :postinstall)
             return ""
-          when "source_fix"
-            fsm_action(:source_fix, :postinstall)
-            return
           when "send_ips"
             #fsm_action(:source_fix, :postinstall)
             # Grab IP string
@@ -157,12 +154,14 @@ module ProjectRazor
           },
           :postinstall => {
             :mk_call            => :postinstall,
+            :apt_update_ok      => :postinstall,
+            :apt_update_failed  => :error_catch,
+            :apt_upgrade_ok     => :postinstall,
+            :apt_upgrade_failed => :error_catch,
+            :apt_install_ok     => :postinstall,
+            :apt_install_failed => :error_catch,
             :boot_call          => :postinstall,
             :preseed_end        => :postinstall,
-            :source_fix         => :postinstall,
-            :apt_get_update     => :postinstall,
-            :apt_get_upgrade    => :postinstall,
-            :apt_get_ruby       => :postinstall,
             :postinstall_inject => :postinstall,
             :os_boot            => :postinstall,
             :os_final           => :os_complete,
