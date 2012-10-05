@@ -123,7 +123,7 @@ module ProjectRazor
       def mount(src_image_path)
         FileUtils.mkpath(mount_path) unless File.directory?(mount_path)
 
-        `#{MOUNT_COMMAND} -o loop #{src_image_path} #{mount_path} 2> /dev/null`
+        `fuseiso #{src_image_path} #{mount_path} 2> /dev/null`
         if $? == 0
           logger.debug "mounted: #{src_image_path} on #{mount_path}"
           true
@@ -134,7 +134,7 @@ module ProjectRazor
       end
 
       def umount
-        `#{UMOUNT_COMMAND} #{mount_path} 2> /dev/null`
+        `fusermount -u #{mount_path} 2> /dev/null`
         if $? == 0
           logger.debug "unmounted: #{mount_path}"
           true
