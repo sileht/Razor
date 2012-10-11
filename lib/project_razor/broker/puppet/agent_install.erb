@@ -20,17 +20,8 @@ ssldir = /var/lib/puppet/ssl
 pluginsync = true
 report = true
 listen = true
-ca_server = <%= @options[:ca_server] %>
 server = <%= @options[:server] %>
-certname = <%= @options[:puppetagent_certname] %>
 EOFPUPPETCONF
-
-cat > /etc/puppet/auth.conf <<EOF
-path    /run
-method  save
-auth    any
-allow   <%= @options[:server] %>
-EOF
 
     if [ -f /etc/default/puppet ]; then
         cat > /etc/default/puppet <<EOFPUPPETDEFAULT
