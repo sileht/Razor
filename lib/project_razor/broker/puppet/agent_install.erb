@@ -23,6 +23,13 @@ listen = true
 server = <%= @options[:server] %>
 EOFPUPPETCONF
 
+cat > /etc/puppet/auth.conf <<EOF
+path    /run
+method  save
+auth    any
+allow   <%= @options[:server] %>
+EOF
+
     if [ -f /etc/default/puppet ]; then
         cat > /etc/default/puppet <<EOFPUPPETDEFAULT
 # Defaults for puppet - sourced by /etc/init.d/puppet
@@ -38,7 +45,10 @@ EOFPUPPETDEFAULT
 
 function start_puppet() {
 #    puppet agent -t
-    puppet agent -t --noop
+    puppet agent -vt --noop # on gen le certificat pour que razor soit content
+    puppet agent -vt # on applique la conf qui rennomme la mahine
+    puppet agent -vt # on applique la conf du vrai puppet
+    puppet agent -vt # 2 fois :)
     #/usr/bin/nohup puppet agent &
     /etc/init.d/puppet start
 }
